@@ -33,8 +33,9 @@ Para iniciar el chatbot, ejecuta el siguiente comando en la terminal (cmd):
 python main.py
 ```
 
+Luego, abre tu navegador web y ve a `http://127.0.0.1:8000` para interactuar con el chatbot a través de la interfaz HTML.
+
 ## Cómo usar
 
-- Escribe tu mensaje y presiona Enter para interactuar con el chatbot.
-- Escribe `exit` para salir del chatbot.
-
+- Escribe tu mensaje en el campo de texto y presiona el botón "Send" para interactuar con el chatbot.
+- Las respuestas del chatbot aparecerán en el área de mensajes.
