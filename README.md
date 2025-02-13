@@ -39,3 +39,7 @@ Luego, abre tu navegador web y ve a `http://127.0.0.1:8000` para interactuar con
 
 - Escribe tu mensaje en el campo de texto y presiona el botón "Send" para interactuar con el chatbot.
 - Las respuestas del chatbot aparecerán en el área de mensajes.
+
+## Conexión desde otros dispositivos
+
+Para conectarte desde otros dispositivos en la misma red WiFi, abre tu navegador web y ve a `http://<tu-ip-local>:8000`, donde `<tu-ip-local>` es la dirección IP de tu computadora en la red local.
