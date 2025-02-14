@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ollama Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 10;
+            padding: 10;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #102542; /* Updated background color */
+        }
+        #chat-container {
+            width: 80%;
+            max-width: 600px;
+            background-color: #102542;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin: 10px;
+            border: 2px solid #F87060; /* Added border color */
+        }
+        #messages {
+            height: 300px;
+            overflow-y: auto;
+            border: 1px solid #F87060; /* Updated border color */
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 12px; /* Adjusted font size */
+            font-weight: bold; /* Changed to font-weight */
+            color: #ffffff; /* Set text color to white */
+        }
+        #user-input {
+            width: calc(100% - 22px);
+            padding: 10px;
+            border: 1px solid #F87060; /* Updated border color */
+            border-radius: 4px;
+            margin-top: 10px;
+            font-weight: bold; /* Changed to font-weight */
+            color: #ffffff; /* Set text color to white */
+            background-color: #102542;
+        }
+        #send-button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #F87060; /* Updated button background color */
+            color: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+
+<header>
+    <h1 style="color: #F87060; text-align: center; font-size: 40px;">Ollama Chatbot</h1>
+</header>
+
+<body>
+    <div id="chat-container">
+        <div id="messages"></div>
+        <input type="text" id="user-input" placeholder="Type your message here...">
+        <button id="send-button">Send</button>
+    </div>
+    <script>
+        document.getElementById('send-button').addEventListener('click', function() {
+            const userInput = document.getElementById('user-input').value;
+            if (userInput.trim() === '') return;
+
+            const messagesDiv = document.getElementById('messages');
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.textContent = 'User: ' + userInput + '\n';
+            messagesDiv.appendChild(userMessageDiv);
+
+            fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: 'message=' + encodeURIComponent(userInput),
+            })
+            .then(response => response.json())
+            .then(data => {
+                const botMessageDiv = document.createElement('div');
+                botMessageDiv.textContent = 'Bot: ' + data.response;
+                messagesDiv.appendChild(botMessageDiv);
+                document.getElementById('user-input').value = ''; // Clear user input
+                messagesDiv.scrollTop = messagesDiv.scrollHeight;
+            });
+
+            document.getElementById('user-input').value = ''; // Clear user input immediately after sending
+        });
+    </script>
+</body>
+</html>
