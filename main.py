@@ -6,7 +6,7 @@ from langchain_ollama import OllamaLLM
 from langchain_core.prompts import ChatPromptTemplate
 
 template = """
-Answer the question below.
+Answer the question below in the same language as the question.
 
 Here is the conversation history: {context}
 
@@ -20,8 +20,10 @@ prompt = ChatPromptTemplate.from_template(template)
 chain = prompt | model
 
 def generate_response(user_input, context):
+    # Detect language of the user input
+    language = "es" if any(ord(char) > 127 for char in user_input) else "en"
     result = chain.invoke({"context": context, "question": user_input})
-    context += f"\nUser: {user_input}\nBot: {result}"
+    context += f"\nUser: {user_input}\n\nBot: {result}\n"  # Added extra newline
     return result, context
 
 class MyHandler(http.server.SimpleHTTPRequestHandler):
